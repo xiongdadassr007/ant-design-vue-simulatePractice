@@ -2,7 +2,7 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:56:04
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-02-22 17:25:49
+ * @LastEditTime: 2023-02-23 15:15:51
  * @FilePath: \测试用vue\vue-demo\src\views\layouts\UserLayout.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -12,14 +12,14 @@
       <div class="user-layout-content">
         <div class="header">
           <div class="top">
-            <a href="">
+            <a href="/">
               <!-- <img src="~@/assets/logo.svg" alt="antdesign图标"> -->
-              <img src="~@/assets/background.svg" alt="antdesign图标">
-              <span>Ant Design</span>
+              <img src="~@/assets/logo.svg" alt="antdesign图标" class="logo">
+              <span class="title">Ant Design</span>
             </a>
           </div>
           <div class="dec">
-
+            Ant Design
           </div>
         </div>
         <router-view />
@@ -34,6 +34,11 @@
 <script>
 export default {
   name: "UserLayout",
+  methods: {
+    
+  },
+  created() {
+  }
 };
 </script>
 
@@ -43,7 +48,42 @@ export default {
   .container {
     width: 100%;
     min-height: 100%;
-    background: #f0f2f5 no-repeat url(~@/assets/background.svg) 50% / 100%;
+    background: #f0f2f5 no-repeat url(~@/assets/background.svg) 50%/100%;
+
+    .user-layout-content {
+      padding: 72px 0 20px;
+
+      .header {
+        text-align: center;
+
+        .top {
+          height: 44px;
+          line-height: 44px;
+          
+          .logo {
+            height: 44px;
+            vertical-align: top;
+          }
+
+          .title {
+            font-size: 33px;
+            color: rgba(0, 0, 0, .85);
+            font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            font-weight: 600;
+            // position: relative;
+            // top: 2px;
+          }
+        }
+
+        .dec {
+          line-height: 60px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  a {
+    text-decoration: none;
   }
 }
 </style>

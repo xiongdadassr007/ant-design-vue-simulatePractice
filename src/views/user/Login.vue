@@ -11,7 +11,7 @@
     <!-- 登录页面 -->
     <div class="line-box">
       <span class="inline-blockOne"></span>
-      <span class="inline-blockTwo"></span>
+      <!-- <span class="inline-blockTwo"></span> -->
       x
     </div>
   </div>
@@ -36,8 +36,8 @@ export default {
       // margin-top: 20px;
     }
     .inline-blockOne {
-      margin-top: 20px;
-      vertical-align: text-top;
+      // margin-top: 20px;
+      vertical-align: bottom;
       
     }
     // .inline-blockTwo {

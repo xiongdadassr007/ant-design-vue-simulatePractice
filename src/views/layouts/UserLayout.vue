@@ -2,7 +2,7 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:56:04
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-02-28 15:09:05
+ * @LastEditTime: 2023-03-01 14:05:17
  * @FilePath: \测试用vue\vue-demo\src\views\layouts\UserLayout.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -86,7 +86,6 @@ export default {
 
     .user-layout-content {
       padding: 72px 0 20px;
-        text-align: center;
       .header {
         text-align: center;
 

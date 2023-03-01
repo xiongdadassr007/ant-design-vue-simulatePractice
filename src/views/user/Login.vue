@@ -2,7 +2,7 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:41:45
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-02-28 16:58:33
+ * @LastEditTime: 2023-03-01 17:03:32
  * @FilePath: \测试用vue\vue-demo\src\views\user\Login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,26 +16,73 @@
       :form="form"
       @submit="handleSubmit"
     >
-      <a-tabs :activeKey="activeTabkey" @change="tabSwitchCallback">
+      <a-tabs 
+        :activeKey="activeTabkey" 
+        @change="tabSwitchCallback"
+        :tabBarStyle="{ borderBottom: 'unset', textAlign: 'center' }">
         <a-tab-pane key="Tab1" tab="Credentials">
-          <a-form-item label="username">
+          <a-form-item>
             <a-input
+              type="text"
               v-decorator="[
                 'username',
                 {
                   rules: [
-                    { required: true, message: 'Please enter account name or email address!' },
+                    {
+                      required: true,
+                      message: 'Please enter account name or email address!',
+                    },
                   ],
-                  validateTrigger: 'blur'
+                  validateTrigger: 'change',
                 },
               ]"
-            />
+              placeholder="Account: admin"
+              size="large"
+            >
+              <a-icon type="user" slot="prefix" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-input-password
+              v-decorator="[
+                'password',
+                {
+                  rules: [
+                    { required: true, message: 'Please enter your password!' },
+                  ],
+                  validateTrigger: 'blur',
+                },
+              ]"
+              placeholder="password: admin or ant.design"
+              size="large"
+            >
+              <a-icon type="lock" slot="prefix" />
+            </a-input-password>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane key="Tab2" tab="Mobile number">
           Content of Tab Pane 2
         </a-tab-pane>
       </a-tabs>
+      <a-form-item>
+        <a-checkbox
+          v-decorator="[
+            'remember',
+            {
+              valuePropName: 'checked',
+              initialValue: true,
+            },
+          ]"
+        >
+          Remember me
+        </a-checkbox>
+        <router-link class="login-form-forgot" to=""> Forgot your password? </router-link>
+      </a-form-item>
+      <a-form-item>
+        <a-button size="large" type="primary" html-type="submit" class="login-form-button">
+          Login
+        </a-button>
+      </a-form-item>
     </a-form>
   </div>
 </template>
@@ -46,7 +93,7 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
-      activeTabkey: "Tab1"
+      activeTabkey: "Tab1",
     };
   },
   methods: {
@@ -60,31 +107,25 @@ export default {
     },
     tabSwitchCallback(key) {
       this.activeTabkey = key;
-    }
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.line-box {
-  background: #fff;
-  // padding-top: 20px;
-  span {
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    background: black;
-    margin: auto 20px;
-    // vertical-align: text-top;
-    // margin-top: 20px;
+.login-account {
+  margin: 0 auto;
+  width: 368px;
+  min-width: 260px;
+
+  .login-form-forgot {
+    font-size: 14px;
+    color: #1890ff;
+    float: right;
   }
-  .inline-blockOne {
-    // margin-top: 20px;
-    vertical-align: top;
-  }
-  .inline-blockTwo {
-    margin-top: 30px;
-    vertical-align: text-top;
+
+  .login-form-button {
+    width: 100%;
   }
 }
 </style>

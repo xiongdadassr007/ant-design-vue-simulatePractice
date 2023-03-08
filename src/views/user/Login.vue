@@ -2,7 +2,7 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:41:45
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-03-01 17:03:32
+ * @LastEditTime: 2023-03-08 17:29:28
  * @FilePath: \测试用vue\vue-demo\src\views\user\Login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -67,10 +67,9 @@
       <a-form-item>
         <a-checkbox
           v-decorator="[
-            'remember',
+            'rememberMe',
             {
-              valuePropName: 'checked',
-              initialValue: true,
+              valuePropName: 'checked'
             },
           ]"
         >
@@ -78,8 +77,14 @@
         </a-checkbox>
         <router-link class="login-form-forgot" to=""> Forgot your password? </router-link>
       </a-form-item>
-      <a-form-item>
-        <a-button size="large" type="primary" html-type="submit" class="login-form-button">
+      <a-form-item style="margin-top: 24px;">
+        <a-button 
+          size="large" 
+          :loading="state.btnState"
+          :disabled="state.btnState"
+          type="primary" 
+          html-type="submit" 
+          class="login-form-button">
           Login
         </a-button>
       </a-form-item>
@@ -94,6 +99,9 @@ export default {
     return {
       form: this.$form.createForm(this),
       activeTabkey: "Tab1",
+      state: {
+        btnState: false
+      }
     };
   },
   methods: {

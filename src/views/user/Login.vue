@@ -2,47 +2,184 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:41:45
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-02-23 17:52:54
+ * @LastEditTime: 2023-03-09 11:18:29
  * @FilePath: \测试用vue\vue-demo\src\views\user\Login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <div>
-    <!-- 登录页面 -->
-    <div class="line-box">
-      <span class="inline-blockOne"></span>
-      <!-- <span class="inline-blockTwo"></span> -->
-      x
-    </div>
+  <div class="login-account">
+    <!-- 登录页面检验输入页 -->
+    <a-form
+      id="loginForm"
+      ref="loginForm"
+      class="login-form-verify"
+      :form="form"
+      @submit="handleSubmit"
+    >
+      <a-tabs 
+        :activeKey="activeTabkey" 
+        @change="tabSwitchCallback"
+        :tabBarStyle="{ borderBottom: 'unset', textAlign: 'center' }">
+        <a-tab-pane key="Tab1" tab="Credentials">
+          <a-form-item>
+            <a-input
+              type="text"
+              v-decorator="[
+                'username',
+                {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please enter account name or email address!',
+                    },
+                    { validator: handleEmailOrUsername }
+                  ],
+                  validateTrigger: 'change',
+                },
+              ]"
+              placeholder="Account: admin"
+              size="large"
+            >
+              <a-icon type="user" slot="prefix" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-input-password
+              v-decorator="[
+                'password',
+                {
+                  rules: [
+                    { required: true, message: 'Please enter your password!' },
+                  ],
+                  validateTrigger: 'blur',
+                },
+              ]"
+              placeholder="password: admin or ant.design"
+              size="large"
+            >
+              <a-icon type="lock" slot="prefix" />
+            </a-input-password>
+          </a-form-item>
+        </a-tab-pane>
+        <a-tab-pane key="Tab2" tab="Mobile number">
+          Content of Tab Pane 2
+        </a-tab-pane>
+      </a-tabs>
+      <a-form-item>
+        <a-checkbox
+          v-decorator="[
+            'rememberMe',
+            {
+              valuePropName: 'checked'
+            },
+          ]"
+        >
+          Remember me
+        </a-checkbox>
+        <router-link class="login-form-forgot" to=""> Forgot your password? </router-link>
+      </a-form-item>
+      <a-form-item style="margin-top: 24px;">
+        <a-button 
+          size="large" 
+          :loading="state.btnState"
+          :disabled="state.btnState"
+          type="primary" 
+          html-type="submit" 
+          class="login-form-button">
+          Login
+        </a-button>
+      </a-form-item>
+      <div class="login-other">
+        <span>Sign in with</span>
+        <a-icon class="item-icon" type="alipay-circle" theme="filled" />
+        <a-icon class="item-icon" type="taobao-circle" theme="filled" />
+        <a-icon class="item-icon" type="weibo-circle" theme="filled" />
+        <router-link class="jump-signup" to="">Sign up</router-link>
+      </div>
+    </a-form>
   </div>
 </template>
 
 <script>
 export default {
-
-}
+  name: "Login",
+  data() {
+    return {
+      form: this.$form.createForm(this),
+      activeTabkey: "Tab1",
+      state: {
+        btnState: false,
+        loginValidatorType: 0, // 0校验成功 1校验失败
+      }
+    };
+  },
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log("Received values of form: ", values);
+          
+        }
+      });
+    },
+    tabSwitchCallback(key) {
+      this.activeTabkey = key;
+    },
+    handleEmailOrUsername(rule,value,callback){
+      let { state } = this
+      // 4到16位用户名或邮箱
+      let reg = /^([\w-]{4,16})|((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/;
+      if(reg.test(value)) {
+        state.loginValidatorType = 0;
+      } else {
+        state.loginValidatorType = 1;
+      }
+    },
+    testReg() {
+      let reg = /^([\w-]{4,16})|((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/;
+      console.log(123,reg.test('45@qq.com'));
+    }
+  },
+  created() {
+    this.testReg();
+  }
+};
 </script>
 
 <style lang="less" scoped>
-  .line-box {
-    background: #fff;
-    span {
-      display: inline-block;
-      height: 40px;
-      width: 40px;
-      background: black;
-      margin: auto 20px;
-      // vertical-align: text-top;
-      // margin-top: 20px;
-    }
-    .inline-blockOne {
-      // margin-top: 20px;
-      vertical-align: bottom;
-      
-    }
-    // .inline-blockTwo {
-    //   margin-top: 20px;
-    //   vertical-align: text-top;
-    // }
+.login-account {
+  margin: 0 auto;
+  width: 368px;
+  min-width: 260px;
+
+  .login-form-forgot {
+    font-size: 14px;
+    color: #1890ff;
+    float: right;
   }
+
+  .login-form-button {
+    width: 100%;
+  }
+
+  .login-other {
+    .item-icon {
+      margin-left: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: color 1s;
+      vertical-align: middle;
+      color: rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+
+    .jump-signup {
+      float: right;
+    }
+  }
+}
 </style>

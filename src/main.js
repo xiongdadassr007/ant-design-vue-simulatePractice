@@ -12,6 +12,7 @@ import router from './router'
 import store from './store'
 import { Button, message, Form, Input, Icon, Tabs, Checkbox } from 'ant-design-vue';
 
+
 Vue.config.productionTip = false
 
 Vue.use(Button);

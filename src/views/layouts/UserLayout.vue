@@ -2,7 +2,7 @@
  * @Author: xiongguangsen02 3096429133@qq.com
  * @Date: 2023-02-22 10:56:04
  * @LastEditors: xiongguangsen02 3096429133@qq.com
- * @LastEditTime: 2023-04-04 16:23:29
+ * @LastEditTime: 2023-04-04 16:24:55
  * @FilePath: \测试用vue\vue-demo\src\views\layouts\UserLayout.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -41,6 +41,7 @@ export default {
     console.log(111111111111111111777777777777777);
     console.log(77777777777777,222222);
     console.log(333333333333333333333333);
+    console.log(4444444444444444444444444444444);
   }
 };
 </script>

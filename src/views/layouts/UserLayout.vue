@@ -40,6 +40,7 @@ export default {
   created() {
     console.log(111111111111111111777777777777777);
     console.log(77777777777777,222222);
+    console.log(333333333333333333333333);
   }
 };
 </script>

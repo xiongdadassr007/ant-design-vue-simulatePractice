@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 export default {
   name: "Login",
   data() {
@@ -109,7 +110,7 @@ export default {
       activeTabkey: "Tab1",
       state: {
         btnState: false,
-        loginValidatorType: 0, // 0校验成功 1校验失败
+        loginValidatorType: 0, // 0邮箱 1用户名
       }
     };
   },
@@ -129,12 +130,40 @@ export default {
     handleEmailOrUsername(rule,value,callback){
       let { state } = this
       // 4到16位用户名或邮箱
-      let reg = /^([\w-]{4,16})|((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/;
+      let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
       if(reg.test(value)) {
         state.loginValidatorType = 0;
       } else {
         state.loginValidatorType = 1;
       }
+      callback()
+    },
+    handleSubmit(e) {
+      e.preventDefault();
+      const {
+        form: { validateFields },
+        activeTabkey,
+        state
+      } = this
+      state.btnState = true
+      let keyFieldName = activeTabkey === "Tab1" ? ['username','password'] : ""
+      console.log(111, keyFieldName);
+      validateFields(keyFieldName, { force: true }, (errors, values) => {
+        console.log(222);
+        if (!errors) {
+          console.log(333);
+          let paramsKeyValue = { ...values }
+          delete paramsKeyValue.username
+          paramsKeyValue[!state.loginValidatorType ? 'email' : 'username'] = values.username
+          paramsKeyValue.password = md5(values.password)
+          console.log(paramsKeyValue);
+          state.btnState = false
+        } else {
+          setTimeout(() => {
+            state.btnState = false
+          }, 600)
+        }
+      })
     },
     testReg() {
       let reg = /^([\w-]{4,16})|((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/;
